@@ -1,4 +1,4 @@
-add_executable(DBC main.cpp)
+add_executable(DBC main.cpp cards.cpp)
 
 if(MSVC)
 	target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC _CRT_SECURE_NO_WARNINGS)
