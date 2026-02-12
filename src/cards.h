@@ -1,8 +1,11 @@
 #pragma once
 
+#include <utility>
+
 namespace cards {
 
     enum seed {
+        Null,
         Heart,
         Diamond,
         Spade,
@@ -26,5 +29,5 @@ namespace cards {
         King = 10
     };
 
-    constexpr unsigned int handValue(const value cardType[12]);
+    constexpr unsigned int handValue(const std::pair<cards::value, cards::seed> cardType[12]);
 }
