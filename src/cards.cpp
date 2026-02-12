@@ -3,7 +3,7 @@
 constexpr unsigned int cards::handValue(const value cardType[]) {
     const unsigned int handSize = sizeof(cardType);
 
-    if (handSize > 11 && cardType[12] != cards::value::Null) return 0;
+    if (handSize > 11 && cardType[11] != cards::value::Null) return 0;
 
     unsigned int handValue = 0;
     unsigned int numberOfAce = 0;
