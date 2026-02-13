@@ -1,8 +1,10 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <cstdlib>
 #include <string>
 #include <cctype>
 #include <random>
+
 
 #include <engine.h>
 #include <card.h>
@@ -10,6 +12,15 @@
 #include <hand.h>
 
 #define MAX_ROUNDS 9
+#define SPACER "——————————————————————————————————\n"
+
+constexpr void clearScreen() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
 
 std::string InputLine();
 bool InputIsYes(const std::string_view response);
@@ -22,6 +33,7 @@ int main()
     while (!engine.IsInGameState(DrunkEngine::GameState::EXIT))
     {
         const uint64_t seed = askPlayerSeed();
+        printf(SPACER);
         engine.SetGameState(DrunkEngine::GameState::PLAYING);
 
         while (engine.IsInGameState(DrunkEngine::GameState::PLAYING) || engine.IsInGameState(DrunkEngine::GameState::PAUSED))
@@ -33,15 +45,21 @@ int main()
 
             playerHand.AddCard(deck.Draw());
             printf("You got: %s\n", DrunkEngine::FromCardToString(deck.LastDraw()).data());
+            printf("Your Hand Value: %d\n", playerHand.GetValue());
+            printf(SPACER);
+
             dealerHand.AddCard(deck.Draw());
             printf("Dealer got: %s\n", DrunkEngine::FromCardToString(deck.LastDraw()).data());
+            printf(SPACER);
 
             playerHand.AddCard(deck.Draw());
             printf("You got: %s\n", DrunkEngine::FromCardToString(deck.LastDraw()).data());
-            dealerHand.AddCard(deck.Draw());
-            printf("Dealer got a card\n");
-
             printf("Your Hand Value: %d\n", playerHand.GetValue());
+            printf(SPACER);
+
+            dealerHand.AddCard(deck.Draw());
+            printf("Dealer got a Secret Card\n");
+            printf(SPACER);
 
             // Player Draw Phase
             for (uint8_t i = 0; i < MAX_ROUNDS; i++)
@@ -49,11 +67,14 @@ int main()
                 printf("Draw a card? (Y/n): ");
                 if (!InputIsYes(InputLine()) || playerHand.GetValue() > 21)
                     break;
+                printf(SPACER);
 
                 playerHand.AddCard(deck.Draw());
                 printf("You got: %s\n", DrunkEngine::FromCardToString(deck.LastDraw()).data());
                 printf("Your Hand Value: %d\n", playerHand.GetValue());
+                printf(SPACER);
             }
+            printf(SPACER);
 
             // Dealer Draw Phase
             for (uint8_t i = 0; i < MAX_ROUNDS; i++)
@@ -72,6 +93,7 @@ int main()
 
                 dealerHand.AddCard(deck.Draw());
                 printf("Dealer got a card\n");
+                printf(SPACER);
             }
 
             if (playerHand.GetValue() < 22)
@@ -79,13 +101,18 @@ int main()
                 printf("Your Hand\n");
                 printf("%s\n", DrunkEngine::FromCardToString(playerHand.GetHand()).data());
                 printf("Value of Your Hand: %d\n", playerHand.GetValue());
+                printf(SPACER);
 
                 printf("Dealer Hand\n");
                 printf("%s\n", DrunkEngine::FromCardToString(dealerHand.GetHand()).data());
                 printf("Value of Dealer Hand: %d\n", dealerHand.GetValue());
+                printf(SPACER);
             }
             else
+            {
                 printf("Oof... You broke the barrier");
+                printf(SPACER);
+            }
 
             bool playerWon = isPlayerWinner(playerHand, dealerHand);
 
@@ -95,9 +122,11 @@ int main()
                 engine.SetGameState(DrunkEngine::GameState::LOSE);
         }
         printf("You %s\n", engine.IsInGameState(DrunkEngine::GameState::WIN) ? "WON!" : "LOSE!");
+        printf(SPACER);
         printf("Play Again? (Y/n): ");
         if (!InputIsYes(InputLine()))
             engine.SetGameState(DrunkEngine::GameState::EXIT);
+        clearScreen();
     }
     return 0;
 }
