@@ -9,10 +9,12 @@
 namespace DrunkEngine {
     class Deck {
     public:
-        Deck(const uint32_t seed);
+        Deck(const uint64_t seed);
         DrunkEngine::Card Draw();
+        DrunkEngine::Card LastDraw();
     private:
         std::array<DrunkEngine::Card, DECK_SIZE> cards;
         uint8_t deckIndex;
+        const uint64_t deckSeed;
     };
 }
