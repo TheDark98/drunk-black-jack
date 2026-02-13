@@ -29,6 +29,7 @@ bool isPlayerWinner(const DrunkEngine::Hand &playerHand, const DrunkEngine::Hand
 
 int main()
 {
+    clearScreen();
     DrunkEngine::GameEngine engine;
     while (!engine.IsInGameState(DrunkEngine::GameState::EXIT))
     {
