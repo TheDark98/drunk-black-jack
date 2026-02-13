@@ -2,8 +2,10 @@
 
 #include "engine_types.h"
 
-namespace DrunkEngine {
-    class GameEngine {
+namespace DrunkEngine
+{
+    class GameEngine
+    {
     public:
         GameEngine();
 
@@ -16,6 +18,7 @@ namespace DrunkEngine {
         DrunkEngine::GameState GetGameState() const;
         DrunkEngine::GameRule GetGameRule() const;
         DrunkEngine::GameDifficulty GetGameDifficulty() const;
+
     private:
         DrunkEngine::GameState gameState;
         DrunkEngine::GameRule gameRule;

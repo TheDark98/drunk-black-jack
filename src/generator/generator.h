@@ -3,8 +3,10 @@
 #include <cstdint>
 #include <random>
 
-namespace DrunkEngine {
-    class Random {
+namespace DrunkEngine
+{
+    class Random
+    {
     public:
         Random(const uint64_t seed);
         uint64_t NextRandom() const;

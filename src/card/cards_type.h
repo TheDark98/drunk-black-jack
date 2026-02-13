@@ -12,8 +12,7 @@ namespace DrunkEngine
             "Heart",
             "Diamond",
             "Spade",
-            "Club"
-        };
+            "Club"};
 
         enum class Seed
         {
@@ -23,7 +22,7 @@ namespace DrunkEngine
             SPADE,
             CLUB
         };
-        
+
         constexpr std::string_view ValueName[14] = {
             "Undefined",
             "Ace",
@@ -38,9 +37,8 @@ namespace DrunkEngine
             "Ten",
             "Jack",
             "Queen",
-            "King"
-        };
-        
+            "King"};
+
         enum class Value
         {
             UNDEFINED,

@@ -6,12 +6,15 @@
 
 #define DECK_SIZE 52
 
-namespace DrunkEngine {
-    class Deck {
+namespace DrunkEngine
+{
+    class Deck
+    {
     public:
         Deck(const uint64_t seed);
         DrunkEngine::Card Draw();
         DrunkEngine::Card LastDraw();
+
     private:
         std::array<DrunkEngine::Card, DECK_SIZE> cards;
         uint8_t deckIndex;

@@ -1,7 +1,9 @@
 #pragma once
 
-namespace DrunkEngine {
-    enum class GameState {
+namespace DrunkEngine
+{
+    enum class GameState
+    {
         MENU, // starting point
         LOADING,
         PLAYING,
@@ -11,12 +13,14 @@ namespace DrunkEngine {
         EXIT
     };
 
-    enum class GameDifficulty {
+    enum class GameDifficulty
+    {
         EASY,
         NORMAL
     };
 
-    enum class GameRule {
+    enum class GameRule
+    {
         CLASSIC,
         DRUNK
     };
