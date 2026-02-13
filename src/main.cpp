@@ -14,7 +14,7 @@
 #define MAX_ROUNDS 9
 #define SPACER "——————————————————————————————————\n"
 
-constexpr void clearScreen() {
+void clearScreen() {
     #ifdef _WIN32
         system("cls");
     #else
