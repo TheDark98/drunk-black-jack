@@ -2,7 +2,7 @@
 
 namespace DrunkEngine {
     enum class GameState {
-        MENU,
+        MENU, // starting point
         LOADING,
         PLAYING,
         PAUSED,

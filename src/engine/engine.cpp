@@ -18,6 +18,10 @@ void DrunkEngine::GameEngine::SetGameDifficulty(const DrunkEngine::GameDifficult
     gameDifficulty = difficulty;
 }
 
+bool DrunkEngine::GameEngine::IsInGameState(DrunkEngine::GameState checkingState) const {
+    return checkingState == gameState;
+}
+
 DrunkEngine::GameState DrunkEngine::GameEngine::GetGameState() const {
     return gameState;
 }

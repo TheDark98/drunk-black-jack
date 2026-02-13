@@ -11,6 +11,8 @@ namespace DrunkEngine {
         void SetGameRule(const DrunkEngine::GameRule rule);
         void SetGameDifficulty(const DrunkEngine::GameDifficulty difficulty);
 
+        bool IsInGameState(DrunkEngine::GameState checkingState) const;
+
         DrunkEngine::GameState GetGameState() const;
         DrunkEngine::GameRule GetGameRule() const;
         DrunkEngine::GameDifficulty GetGameDifficulty() const;
