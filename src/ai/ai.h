@@ -18,9 +18,9 @@ namespace DrunkEngine
         const DrunkEngine::Hand playerHand;
         const DrunkEngine::Deck deck;
         constexpr double difficultyWeight() const;
-        constexpr double playerHandWeight();
-        constexpr double dealerHandWeight();
-        constexpr double deckWeight();
-        constexpr std::pair<double, uint8_t> unifiedCardSum(const DrunkEngine::Hand &handA, bool isBigSum);
+        double playerHandWeight();
+        double dealerHandWeight();
+        double deckWeight();
+        std::pair<double, uint8_t> unifiedCardSum(const DrunkEngine::Hand &handA, bool isBigSum);
     };
 }

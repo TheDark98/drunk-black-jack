@@ -40,7 +40,7 @@ constexpr double DrunkEngine::DealerAI::difficultyWeight() const
     }
 }
 
-constexpr double DrunkEngine::DealerAI::playerHandWeight()
+double DrunkEngine::DealerAI::playerHandWeight()
 {
     std::pair<double, uint8_t> bigCardsSum = unifiedCardSum(playerHand, true);
     std::pair<double, uint8_t> smallCardsSum = unifiedCardSum(playerHand, true);
@@ -55,7 +55,7 @@ constexpr double DrunkEngine::DealerAI::playerHandWeight()
     return perfectScore * handWeight * cardWeight;
 }
 
-constexpr double DrunkEngine::DealerAI::dealerHandWeight()
+double DrunkEngine::DealerAI::dealerHandWeight()
 {
     std::pair<double, uint8_t> bigCardsSum = unifiedCardSum(*dealerHand, true);
     std::pair<double, uint8_t> smallCardsSum = unifiedCardSum(*dealerHand, true);
@@ -66,13 +66,13 @@ constexpr double DrunkEngine::DealerAI::dealerHandWeight()
     return (1.0 - perfectScore) * cardWeight;
 }
 
-constexpr double DrunkEngine::DealerAI::deckWeight()
+double DrunkEngine::DealerAI::deckWeight()
 {
     const double nextCardValue = DrunkEngine::FromEnumToInt(deck.PickCard(deck.GetIndex() + 1).value);
     return nextCardValue + dealerHand->GetValue() > 21 ? 0.0 : 1.0;
 }
 
-constexpr std::pair<double, uint8_t> DrunkEngine::DealerAI::unifiedCardSum(const DrunkEngine::Hand &handA, bool isBigSum)
+std::pair<double, uint8_t> DrunkEngine::DealerAI::unifiedCardSum(const DrunkEngine::Hand &handA, bool isBigSum)
 {
     std::vector<double> cards(6);
 
