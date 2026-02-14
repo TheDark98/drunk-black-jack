@@ -5,7 +5,6 @@
 #include <cctype>
 #include <random>
 
-
 #include <engine.h>
 #include <card.h>
 #include <deck.h>
@@ -22,12 +21,13 @@
 #define BACKGROUND_COLOR
 #endif
 
-void clearScreen() {
-    #ifdef _WIN32
-        system("cls");
-    #else
-        system("clear");
-    #endif
+void clearScreen()
+{
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
 }
 
 std::string InputLine();
@@ -59,25 +59,22 @@ int main()
 
             playerHand.AddCard(deck.Draw());
             printPlayerHand(playerHand);
-            std::this_thread::sleep_for(std::chrono::seconds(4));
+            std::this_thread::sleep_for(std::chrono::seconds(1));
             clearScreen();
 
             dealerHand.AddCard(deck.Draw());
             printPlayerHand(playerHand);
             printDealerHand(dealerHand);
-            std::this_thread::sleep_for(std::chrono::seconds(2));
+            std::this_thread::sleep_for(std::chrono::seconds(1));
             clearScreen();
 
             playerHand.AddCard(deck.Draw());
             printPlayerHand(playerHand);
             printDealerSecretHand(dealerHand.GetHand()[0]);
-            std::this_thread::sleep_for(std::chrono::seconds(2));
+            std::this_thread::sleep_for(std::chrono::seconds(1));
             clearScreen();
 
             dealerHand.AddCard(deck.Draw());
-            printPlayerHand(playerHand);
-            printDealerSecretHand(dealerHand.GetHand()[0]);
-            clearScreen();
 
             // Player Draw Phase
             for (uint8_t i = 0; i < MAX_ROUNDS; i++)
@@ -85,10 +82,12 @@ int main()
                 printPlayerHand(playerHand);
                 printDealerSecretHand(dealerHand.GetHand()[0]);
                 formattedPrint("Draw a card? (Y/n): ");
-                if (!InputIsYes(InputLine()) || playerHand.GetValue() > 21) break;
+                if (!InputIsYes(InputLine()) || playerHand.GetValue() > 21)
+                    break;
                 clearScreen();
 
                 playerHand.AddCard(deck.Draw());
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
             }
             clearScreen();
 
@@ -101,11 +100,11 @@ int main()
                     break;
                 if (dealerHand.GetValue() >= 21)
                     break;
-                
+
                 printPlayerHand(playerHand);
                 printDealerHand(dealerHand);
                 formattedPrint("Dealer is thinking...\n");
-                
+
                 if (dealerAI.choice())
                     break;
 
@@ -201,21 +200,24 @@ void formattedPrint(const std::string_view message)
     printf("%s%s%s", WHITE, message.data(), RESET);
 }
 
-void printPlayerHand(const DrunkEngine::Hand &hand) {
+void printPlayerHand(const DrunkEngine::Hand &hand)
+{
     formattedPrint("Your Hand\n");
     formattedPrint(DrunkEngine::FromCardToString(hand.GetHand()) + "\n");
     formattedPrint(BOLD, WHITE, std::string("Value: ") + std::to_string(hand.GetValue()) + "\n");
     formattedPrint(BOLD, WHITE, SPACER);
 }
 
-void printDealerHand(const DrunkEngine::Hand &hand) {
+void printDealerHand(const DrunkEngine::Hand &hand)
+{
     formattedPrint("Dealer Hand\n");
     formattedPrint(DrunkEngine::FromCardToString(hand.GetHand()) + "\n");
     formattedPrint(BOLD, WHITE, std::string("Value: ") + std::to_string(hand.GetValue()) + "\n");
     formattedPrint(BOLD, WHITE, SPACER);
 }
 
-void printDealerSecretHand(const DrunkEngine::Card card) {
+void printDealerSecretHand(const DrunkEngine::Card card)
+{
     formattedPrint("Dealer Hand\n");
     formattedPrint(DrunkEngine::FromCardToString(card) + "\n");
     formattedPrint("Secret Card\n");
