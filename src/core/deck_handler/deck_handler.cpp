@@ -70,11 +70,11 @@ void DrunkEngine::DeckHandler::generateDeck()
     while (addedCards < DECK_SIZE)
     {
         const uint64_t randomValue = numberRandomizer.Generate();
-        bool cardInDeck = !(addedCards == 0);
+        bool cardInDeck = false; // First card will always be added
 
         newCard.SetTraits(CardTrait::Rank(1 + randomValue % RANKS), CardTrait::Suit(1 + randomValue % SUITS));
 
-        for (uint8_t i = 0; cardInDeck && i < addedCards; i++)
+        for (uint8_t i = 0; !cardInDeck && addedCards != 0 && i < addedCards; i++)
             cardInDeck = m_deck[i] == newCard;
 
         if (!cardInDeck)

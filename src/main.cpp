@@ -81,9 +81,8 @@ uint64_t askPlayerSeed();
 bool isPlayerWinner(const uint8_t playerScore, const uint8_t dealerScore);
 void formattedPrint(const std::string_view style, const std::string_view color, const std::string_view message);
 void formattedPrint(const std::string_view message);
-void printPlayerHand(DrunkEngine::Hand &hand);
-void printDealerHand(DrunkEngine::Hand &hand);
-void printDealerSecretHand(DrunkEngine::Hand &hand);
+void printHand(DrunkEngine::Hand &hand);
+void printSecretHand(DrunkEngine::Hand &hand);
 std::string FromCardToString(const DrunkEngine::Card card);
 std::string FromHandToString(DrunkEngine::Hand &hand);
 std::string FromSecretHandToString(DrunkEngine::Hand &hand);
@@ -111,33 +110,42 @@ int main()
                 player.AssignHand(&deck.GetPlayerHand(player.GetPlayerID()));
 
             players[1].GetHand() += deck.Draw();
-            printPlayerHand(players[1].GetHand());
+            formattedPrint("Your Hand\n");
+            printHand(players[1].GetHand());
             std::this_thread::sleep_for(std::chrono::seconds(1));
             clearScreen();
 
             players[0].GetHand() += deck.Draw();
-            printPlayerHand(players[1].GetHand());
-            printDealerHand(players[0].GetHand());
+            formattedPrint("Your Hand\n");
+            printHand(players[1].GetHand());
+            formattedPrint("Dealer Hand\n");
+            printHand(players[0].GetHand());
             std::this_thread::sleep_for(std::chrono::seconds(1));
             clearScreen();
 
             players[1].GetHand() += deck.Draw();
-            printPlayerHand(players[1].GetHand());
-            printDealerHand(players[0].GetHand());
+            formattedPrint("Your Hand\n");
+            printHand(players[1].GetHand());
+            formattedPrint("Dealer Hand\n");
+            printSecretHand(players[0].GetHand());
             std::this_thread::sleep_for(std::chrono::seconds(1));
             clearScreen();
 
             players[0].GetHand() += deck.Draw();
-            printPlayerHand(players[1].GetHand());
-            printDealerSecretHand(players[0].GetHand());
+            formattedPrint("Your Hand\n");
+            printHand(players[1].GetHand());
+            formattedPrint("Dealer Hand\n");
+            printSecretHand(players[0].GetHand());
             std::this_thread::sleep_for(std::chrono::seconds(1));
             clearScreen();
 
             // Player Draw Phase
             for (uint8_t i = 0; i < MAX_ROUNDS; i++)
             {
-                printPlayerHand(players[1].GetHand());
-                printDealerSecretHand(players[0].GetHand());
+                formattedPrint("Your Hand\n");
+                printHand(players[1].GetHand());
+                formattedPrint("Dealer Hand\n");
+                printSecretHand(players[0].GetHand());
                 formattedPrint("Draw a card? (Y/n): ");
                 if (!InputIsYes(InputLine()) || players[1].GetHand() > 21)
                     break;
@@ -160,15 +168,19 @@ int main()
                 if (DrunkEngine::AILogic::Choose(engine.GetDifficulty(), players[0].GetPlayerID(), &players)) break;
 
                 players[0].GetHand() += deck.Draw();
-                printPlayerHand(players[1].GetHand());
-                printDealerHand(players[0].GetHand());
+                formattedPrint("Your Hand\n");
+                printHand(players[1].GetHand());
+                formattedPrint("Dealer Hand\n");
+                printHand(players[0].GetHand());
                 std::this_thread::sleep_for(std::chrono::milliseconds((players[0].GetPlayerID() / 10) * 1000));
                 clearScreen();
             }
             clearScreen();
 
-            printPlayerHand(players[1].GetHand());
-            printDealerHand(players[0].GetHand());
+            formattedPrint("Your Hand\n");
+            printHand(players[1].GetHand());
+            formattedPrint("Dealer Hand\n");
+            printHand(players[0].GetHand());
             formattedPrint("Press Enter to Continue\n");
             InputLine();
             clearScreen();
@@ -255,25 +267,15 @@ void formattedPrint(const std::string_view message)
     printf("%s%s%s", WHITE, message.data(), RESET);
 }
 
-void printPlayerHand(DrunkEngine::Hand &hand)
+void printHand(DrunkEngine::Hand &hand)
 {
-    formattedPrint("Your Hand\n");
     formattedPrint(FromHandToString(hand) + "\n");
     formattedPrint(BOLD, WHITE, std::string("Value: ") + std::to_string(hand.GetValue(false)) + "\n");
     formattedPrint(BOLD, WHITE, VISUAL_SPACER);
 }
 
-void printDealerHand(DrunkEngine::Hand &hand)
+void printSecretHand(DrunkEngine::Hand &hand)
 {
-    formattedPrint("Dealer Hand\n");
-    formattedPrint(FromHandToString(hand) + "\n");
-    formattedPrint(BOLD, WHITE, std::string("Value: ") + std::to_string(hand.GetValue(false)) + "\n");
-    formattedPrint(BOLD, WHITE, VISUAL_SPACER);
-}
-
-void printDealerSecretHand(DrunkEngine::Hand &hand)
-{
-    formattedPrint("Dealer Hand\n");
     formattedPrint(FromSecretHandToString(hand) + "\n");
     formattedPrint(BOLD, WHITE, std::string("Value: ") + "?" + "\n");
     formattedPrint(BOLD, WHITE, VISUAL_SPACER);
