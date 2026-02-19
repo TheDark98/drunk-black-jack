@@ -7,7 +7,7 @@ add_subdirectory(external)
 
 set(DBC_INCLUDE include)
 
-project(drunce VERSION 1.3.4 LANGUAGES CXX)
+project(drunce VERSION 1.3.4)
 set(CMAKE_CXX_STANDARD 23)
 
 add_subdirectory(src)
